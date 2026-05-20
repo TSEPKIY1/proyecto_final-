@@ -1,7 +1,7 @@
 import os
 from datetime import date, datetime, timedelta
 from pathlib import Path
-
+from urllib.parse import urlparse, unquote
 from flask import Flask, jsonify, request, send_from_directory, session
 from flask_cors import CORS
 import mysql.connector
@@ -23,8 +23,26 @@ app.config["SESSION_COOKIE_SECURE"] = os.getenv("SESSION_COOKIE_SECURE", "false"
 CORS(app, supports_credentials=True)
 
 
+from urllib.parse import urlparse, unquote
+
+
 def get_db_config():
-    """Config compatible con Railway MySQL y con entorno local."""
+    """Config compatible con Railway MySQL y entorno local."""
+
+    mysql_url = os.getenv("MYSQL_URL") or os.getenv("DATABASE_URL")
+
+    if mysql_url:
+        url = urlparse(mysql_url)
+
+        return {
+            "host": url.hostname,
+            "port": int(url.port or 3306),
+            "user": unquote(url.username or ""),
+            "password": unquote(url.password or ""),
+            "database": (url.path or "/railway").replace("/", ""),
+            "autocommit": False,
+        }
+
     return {
         "host": os.getenv("MYSQLHOST") or os.getenv("DB_HOST") or "localhost",
         "port": int(os.getenv("MYSQLPORT") or os.getenv("DB_PORT") or 3306),
