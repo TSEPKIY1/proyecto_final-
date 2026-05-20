@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Militar</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background:
+                radial-gradient(circle at top, #111827 0%, #050816 45%, #02040a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: "Segoe UI", sans-serif;
+            color: white;
+        }
+
+        .background-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(88, 166, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(88, 166, 255, 0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: moverGrid 10s linear infinite;
+        }
+
+        @keyframes moverGrid {
+            from {
+                transform: translateY(0px);
+            }
+
+            to {
+                transform: translateY(40px);
+            }
+        }
+
+        .registro-box {
+            position: relative;
+            z-index: 2;
+            width: 430px;
+            padding: 40px;
+            border-radius: 18px;
+            background: rgba(13, 17, 23, 0.95);
+            border: 1px solid #30363d;
+            box-shadow:
+                0 0 40px rgba(0, 0, 0, 0.7),
+                0 0 25px rgba(88, 166, 255, 0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-top {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-top img {
+            width: 90px;
+            filter: drop-shadow(0 0 10px rgba(88, 166, 255, 0.5));
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 5px;
+            color: #58a6ff;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #8b949e;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            color: #c9d1d9;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+            background: #0d1117;
+            color: white;
+            outline: none;
+            box-sizing: border-box;
+            transition: 0.25s;
+        }
+
+        input:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 0 10px rgba(88, 166, 255, 0.3);
+        }
+
+        .checks {
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #21262d;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .checks p {
+            margin: 6px 0;
+            font-size: 13px;
+            color: #8b949e;
+        }
+
+        .toggle-password {
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            color: #58a6ff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .toggle-password:hover {
+            background: #1f2937;
+        }
+
+        .btn-register {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #238636, #2ea043);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 18px rgba(46, 160, 67, 0.4);
+        }
+
+        .footer-text {
+            margin-top: 22px;
+            text-align: center;
+            color: #8b949e;
+            font-size: 14px;
+        }
+
+        .footer-text a {
+            color: #58a6ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        .status-bar {
+            margin-top: 22px;
+            text-align: center;
+            font-size: 12px;
+            color: #00ff9c;
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-grid"></div>
+
+    <div class="registro-box">
+
+        <div class="logo-top">
+            <img src="img/army.png" alt="Logo Militar">
+        </div>
+
+        <h1>REGISTRO</h1>
+        <div class="subtitle">
+            Creación de operador táctico autorizado
+        </div>
+
+        <form id="registroForm">
+
+            <label for="email">Correo Operativo</label>
+            <input type="email" id="email" required placeholder="operador@military.gov">
+
+            <label for="password">Contraseña Segura</label>
+            <input type="password" id="password" required minlength="8" placeholder="••••••••">
+
+            <button type="button" id="btnVerPassword" class="toggle-password">
+                Mostrar contraseña
+            </button>
+
+            <div class="checks">
+                <p id="longitud">❌ Mínimo 8 caracteres</p>
+                <p id="mayus">❌ Una mayúscula</p>
+                <p id="numero">❌ Un número</p>
+            </div>
+
+            <label for="confirmar">Confirmar Contraseña</label>
+            <input type="password" id="confirmar" required minlength="8" placeholder="••••••••">
+
+            <button type="submit" class="btn-register">
+                CREAR OPERADOR
+            </button>
+
+        </form>
+
+        <div class="footer-text">
+            ¿Ya existe un operador?
+            <a href="index.html">Iniciar sesión</a>
+        </div>
+
+        <div class="status-bar">
+            SECURE REGISTRATION PROTOCOL ACTIVE
+        </div>
+
+    </div>
+
+    <script src="js/seguridad.js"></script>
+
+</body>
+
+</html>

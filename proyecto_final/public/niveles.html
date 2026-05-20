@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOCOLO DE EVALUACIÓN SEMAR</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="evaluacion-body">
+
+    <div class="evaluacion-container">
+
+        <div class="header-evaluacion">
+            <h1>PROTOCOLO DE EVALUACIÓN SEMAR</h1>
+
+            <p>
+                Sistema de clasificación física y médica
+                basado en acondicionamiento militar operacional.
+            </p>
+        </div>
+
+        <form id="evaluacionForm">
+
+            <!-- ========================================= -->
+            <!-- EVALUACIÓN MÉDICA -->
+            <!-- ========================================= -->
+
+            <section class="card-evaluacion">
+
+                <h2>Evaluación Médica Inicial</h2>
+
+                <div class="grid-evaluacion">
+
+                    <div class="input-group">
+                        <label for="edad">Edad</label>
+                        <input type="number" id="edad" min="16" max="60" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="peso">Peso (kg)</label>
+                        <input type="number" id="peso" min="30" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="altura">Estatura (cm)</label>
+                        <input type="number" id="altura" min="120" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="fc">Frecuencia cardíaca en reposo</label>
+                        <input type="number" id="fc" min="40" max="200" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="presion">Presión arterial sistólica <span class="campo-opcional">(opcional)</span></label>
+                        <input type="number" id="presion" min="80" max="250" placeholder="Solo si cuentas con baumanómetro">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="oxigeno">Saturación de oxígeno (%) <span class="campo-opcional">(opcional)</span></label>
+                        <input type="number" id="oxigeno" min="50" max="100" placeholder="Solo si cuentas con oxímetro">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="cardiaca">Enfermedad cardíaca</label>
+
+                        <select id="cardiaca">
+                            <option value="0">No</option>
+                            <option value="1">Sí</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="lesiones">Lesiones articulares</label>
+
+                        <select id="lesiones">
+                            <option value="0">No</option>
+                            <option value="1">Sí</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="info-box">
+                    La presión arterial y la saturación de oxígeno son datos opcionales: solo se capturan si el operador cuenta con baumanómetro u oxímetro. Si se dejan vacíos, el sistema evalúa la aptitud con los datos disponibles y el cuestionario médico.
+                </div>
+
+            </section>
+
+            <!-- ========================================= -->
+            <!-- EVALUACIÓN FÍSICA -->
+            <!-- ========================================= -->
+
+            <section class="card-evaluacion">
+
+                <h2>Evaluación Física Operacional</h2>
+
+                <div class="grid-evaluacion">
+
+                    <div class="input-group">
+                        <label for="pushups">Lagartijas en 1 minuto</label>
+                        <input type="number" id="pushups" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="pullups">Dominadas estrictas</label>
+                        <input type="number" id="pullups" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="squats">Sentadillas en 1 minuto</label>
+                        <input type="number" id="squats" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="plank">Tiempo de plancha (segundos)</label>
+                        <input type="number" id="plank" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="run">
+                            Tiempo carrera 1 km (minutos)
+                        </label>
+
+                        <input type="number" step="0.1" id="run" min="1" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="flexibilidad">Flexibilidad</label>
+
+                        <select id="flexibilidad">
+                            <option value="10">Baja</option>
+                            <option value="20">Media</option>
+                            <option value="30">Alta</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="info-box">
+                    El sistema calculará automáticamente:
+                    nivel operacional,
+                    zonas cardíacas
+                    y carga inicial de entrenamiento.
+                </div>
+
+            </section>
+
+            <button type="submit" class="btn btn-primary btn-evaluacion">
+                INICIAR EVALUACIÓN OPERACIONAL
+            </button>
+
+        </form>
+
+        <!-- ========================================= -->
+        <!-- RESULTADO -->
+        <!-- ========================================= -->
+
+        <section class="resultado-box" id="resultadoBox">
+
+            <h2>EVALUACIÓN COMPLETADA</h2>
+
+            <div id="estadoMedico" class="estado-apto"></div>
+
+            <div id="nivelOperador" class="nivel-operador"></div>
+
+            <p id="detalleRutina"></p>
+
+        </section>
+
+    </div>
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

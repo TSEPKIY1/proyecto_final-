@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sistema Militar | Login</title>
+
+    <!-- Fuente -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="login-body">
+
+    <!-- Overlay -->
+    <div class="bg-overlay"></div>
+
+    <!-- Contenedor principal -->
+    <main class="login-wrapper">
+
+        <!-- Panel izquierdo -->
+        <section class="login-info">
+
+            <div class="logo-container">
+                <img src="img/army.png" alt="Army Logo">
+            </div>
+
+            <h1>SISTEMA TÁCTICO</h1>
+
+            <p class="subtitle">
+                Plataforma de control y evaluación operativa militar.
+            </p>
+
+            <div class="system-status">
+                <div class="status-line">
+                    <span class="dot active"></span>
+                    SERVIDOR OPERACIONAL
+                </div>
+
+                <div class="status-line">
+                    <span class="dot active"></span>
+                    SEGURIDAD ACTIVA
+                </div>
+
+                <div class="status-line">
+                    <span class="dot warning"></span>
+                    ACCESO RESTRINGIDO
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Panel derecho -->
+        <section class="login-panel">
+
+            <form id="loginForm" class="login-form">
+
+                <h2>INICIAR SESIÓN</h2>
+
+                <div class="input-group">
+                    <label for="email">CORREO OPERATIVO</label>
+                    <input type="email" id="email" placeholder="operador@military.gov" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">CLAVE DE ACCESO</label>
+                    <input type="password" id="password" minlength="8" placeholder="••••••••" required>
+                </div>
+
+                <button type="button" class="toggle-password" id="btnVerPassword">
+                    MOSTRAR CONTRASEÑA
+                </button>
+
+                <button type="submit" class="login-btn">
+                    ACCEDER AL SISTEMA
+                </button>
+
+                <!-- Estado -->
+                <div id="loginStatus" class="login-status"></div>
+
+                <p class="register-link">
+                    ¿Sin acceso operativo?
+                    <a href="registrarse.html">
+                        Registrar operador
+                    </a>
+                </p>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-logos">
+
+        <img src="img/seals.jpg" alt="Seals">
+
+        <img src="img/delta.jpg" alt="Delta Force">
+
+
+    </footer>
+
+    <!-- JS -->
+    <script src="js/seguridad.js"></script>
+
+</body>
+
+</html>

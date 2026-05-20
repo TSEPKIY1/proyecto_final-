@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOT SEQUENCE - Tactical System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #05080c;
+            color: #00ff9c;
+            font-family: Consolas, monospace;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .background-grid {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 255, 156, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 156, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 8s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            from {
+                transform: translateY(0px);
+            }
+
+            to {
+                transform: translateY(40px);
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at center,
+                    rgba(0, 255, 156, 0.08),
+                    rgba(0, 0, 0, 0.95));
+            z-index: 1;
+        }
+
+        .terminal-container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(10, 15, 20, 0.92);
+            border: 1px solid rgba(0, 255, 156, 0.25);
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow:
+                0 0 25px rgba(0, 255, 156, 0.12),
+                inset 0 0 25px rgba(0, 255, 156, 0.03);
+            backdrop-filter: blur(6px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            border-bottom: 1px solid rgba(0, 255, 156, 0.15);
+            padding-bottom: 15px;
+        }
+
+        .system-title {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .system-status {
+            color: #58a6ff;
+            font-size: 14px;
+        }
+
+        .terminal {
+            min-height: 280px;
+        }
+
+        .line {
+            opacity: 0;
+            margin: 14px 0;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transform: translateY(10px);
+            animation: fadeIn 0.6s forwards;
+        }
+
+        .line.success {
+            color: #00ff9c;
+        }
+
+        .line.warning {
+            color: #ffcc00;
+        }
+
+        .line.error {
+            color: #ff4d4d;
+        }
+
+        .line.info {
+            color: #58a6ff;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .progress-container {
+            margin-top: 30px;
+        }
+
+        .progress-label {
+            margin-bottom: 10px;
+            color: #8b949e;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 18px;
+            background: #11161d;
+            border: 1px solid rgba(0, 255, 156, 0.15);
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background:
+                linear-gradient(90deg,
+                    #006d43,
+                    #00ff9c);
+            transition: width 0.5s ease;
+            box-shadow: 0 0 12px rgba(0, 255, 156, 0.4);
+        }
+
+        .footer-status {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            color: #8b949e;
+            font-size: 13px;
+        }
+
+        .access-granted {
+            margin-top: 30px;
+            font-size: 28px;
+            text-align: center;
+            font-weight: bold;
+            color: #00ff9c;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: 0.5s ease;
+            text-shadow: 0 0 15px rgba(0, 255, 156, 0.4);
+        }
+
+        .access-granted.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .scanline {
+            position: fixed;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 156, 0.08);
+            animation: scan 4s linear infinite;
+            z-index: 3;
+        }
+
+        @keyframes scan {
+            from {
+                top: -10px;
+            }
+
+            to {
+                top: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-grid"></div>
+    <div class="overlay"></div>
+    <div class="scanline"></div>
+
+    <div class="terminal-container">
+
+        <div class="header">
+            <div class="system-title">
+                TACTICAL CONTROL SYSTEM
+            </div>
+
+            <div class="system-status">
+                STATUS: ONLINE
+            </div>
+        </div>
+
+        <div class="terminal" id="terminal"></div>
+
+        <div class="progress-container">
+            <div class="progress-label">
+                SYSTEM INITIALIZATION
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="access-granted" id="accessGranted">
+            ACCESS GRANTED
+        </div>
+
+        <div class="footer-status">
+            <span>ENCRYPTION: AES-256</span>
+            <span>DATABASE LINK: SECURE</span>
+            <span>PROTOCOL: ACTIVE</span>
+        </div>
+
+    </div>
+
+    <script>
+        const terminal = document.getElementById("terminal");
+        const progressFill = document.getElementById("progressFill");
+        const accessGranted = document.getElementById("accessGranted");
+
+        const API_BASE = window.location.origin;
+
+        const bootLines = [
+            { text: "> INITIALIZING TACTICAL SYSTEM...", class: "info" },
+            { text: "> ESTABLISHING SECURE CONNECTION...", class: "info" },
+            { text: "> VERIFYING OPERATOR SESSION...", class: "warning" },
+            { text: "> DATABASE CONNECTION ESTABLISHED", class: "success" },
+            { text: "> LOADING OPERATOR PROFILE...", class: "info" },
+            { text: "> SYNCHRONIZING TRAINING DATA...", class: "info" },
+            { text: "> SECURITY PROTOCOLS VALIDATED", class: "success" },
+            { text: "> ACCESS LEVEL: AUTHORIZED", class: "success" }
+        ];
+
+        let currentLine = 0;
+        let destinoFinal = "niveles.html";
+
+        function agregarLinea() {
+            if (currentLine >= bootLines.length) {
+                accessGranted.classList.add("active");
+
+                setTimeout(() => {
+                    window.location.href = destinoFinal;
+                }, 2200);
+
+                return;
+            }
+
+            const linea = document.createElement("div");
+            linea.className = `line ${bootLines[currentLine].class}`;
+
+            linea.innerHTML = `
+            ${bootLines[currentLine].text}
+            <span class="cursor">█</span>
+        `;
+
+            terminal.appendChild(linea);
+
+            const porcentaje = ((currentLine + 1) / bootLines.length) * 100;
+            progressFill.style.width = `${porcentaje}%`;
+
+            currentLine++;
+
+            setTimeout(agregarLinea, 700);
+        }
+
+        fetch(`${API_BASE}/api/verificar-sesion`, {
+            method: "GET",
+            credentials: "include"
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Sesión inválida");
+                }
+
+                return response.json();
+            })
+            .then(data => {
+                console.log("SESIÓN VALIDADA:", data);
+
+                if (data.usuario && Number(data.usuario.evaluacion_completada) === 1) {
+                    destinoFinal = "dashboard.html";
+                } else {
+                    destinoFinal = "niveles.html";
+                }
+
+                agregarLinea();
+            })
+            .catch(error => {
+                const errorLine = document.createElement("div");
+
+                errorLine.className = "line error";
+
+                errorLine.innerHTML = `
+                > ACCESS DENIED - INVALID SESSION
+            `;
+
+                terminal.appendChild(errorLine);
+
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 2500);
+
+                console.error(error);
+            });
+    </script>
+
+</body>
+
+</html>

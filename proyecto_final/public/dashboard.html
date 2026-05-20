@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Acondicionamiento</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="js/dashboard.js"></script>
+</head>
+
+<body class="dashboard-body">
+
+    <div id="levelUpMsg" class="level-up"></div>
+
+    <header class="dashboard-header">
+        <div class="header-left">
+            <img src="img/army.png" alt="Logo" class="header-logo">
+        </div>
+
+        <div class="header-center">
+            <h1>PANEL DE ACONDICIONAMIENTO</h1>
+            <p class="subtitle">Sistema de progreso físico, disciplina y preparación general</p>
+        </div>
+
+        <div class="header-right">
+            <button id="btnLogout" class="btn btn-danger btn-logout">CERRAR SESIÓN</button>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+
+        <section class="card estado-card">
+            <div class="card-title">
+                <h2>Estado del Usuario</h2>
+            </div>
+
+            <div class="estado-info">
+                <div class="estado-item">
+                    <span class="label">Usuario</span>
+                    <p id="email">Cargando...</p>
+                </div>
+                <div class="estado-item">
+                    <span class="label">Nivel Actual</span>
+                    <p id="nivel">---</p>
+                </div>
+                <div class="estado-item">
+                    <span class="label">Puntos Totales</span>
+                    <p id="puntos">0</p>
+                </div>
+                <div class="estado-item">
+                    <span class="label">Racha de Entrenamiento</span>
+                    <p id="racha">🔥 0 días</p>
+                </div>
+            </div>
+
+            <div class="progreso-container">
+                <div class="progress-top">
+                    <span>Progreso general</span>
+                    <span id="porcentajeProgreso">0%</span>
+                </div>
+                <div class="progress">
+                    <div class="bar" id="barra"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card evaluacion-card">
+            <div class="card-title card-title-with-subtitle">
+                <h2>Estado Físico Actual</h2>
+                <p>Totales acumulados desde la evaluación inicial y las rutinas completadas.</p>
+            </div>
+
+            <div class="metricas-grid metricas-grid-extendida">
+                <div class="metrica-box">
+                    <span class="metrica-label">Lagartijas totales</span>
+                    <span class="metrica-value" id="metricPushups">0</span>
+                </div>
+                <div class="metrica-box">
+                    <span class="metrica-label">Dominadas totales</span>
+                    <span class="metrica-value" id="metricPullups">0</span>
+                </div>
+                <div class="metrica-box">
+                    <span class="metrica-label">Sentadillas totales</span>
+                    <span class="metrica-value" id="metricSquats">0</span>
+                </div>
+                <div class="metrica-box">
+                    <span class="metrica-label">Carrera acumulada</span>
+                    <span class="metrica-value" id="metricRunning">0 km</span>
+                </div>
+                <div class="metrica-box">
+                    <span class="metrica-label">Plancha acumulada</span>
+                    <span class="metrica-value" id="metricPlank">0 seg</span>
+                </div>
+                <div class="metrica-box">
+                    <span class="metrica-label">Burpees totales</span>
+                    <span class="metrica-value" id="metricBurpees">0</span>
+                </div>
+            </div>
+
+            <div class="estado-condicion">
+                <h3>Diagnóstico</h3>
+                <p id="diagnostico">Analizando condición física...</p>
+            </div>
+        </section>
+
+        <section class="card rutina-card">
+            <div class="card-title">
+                <h2>Rutina Asignada</h2>
+            </div>
+
+            <div class="rutina-info">
+                <div class="rutina-badge" id="rutinaNombre">ENTRENAMIENTO DEL DÍA</div>
+
+                <div class="rutina-meta-grid">
+                    <div><span>Duración</span><strong id="rutinaDuracion">---</strong></div>
+                    <div><span>Intensidad</span><strong id="rutinaIntensidad">---</strong></div>
+                    <div><span>Enfoque</span><strong id="rutinaEnfoque">---</strong></div>
+                </div>
+
+                <div class="rutina-contenido">
+                    <h3>Objetivo del día</h3>
+                    <p id="rutinaObjetivo">Cargando objetivo...</p>
+
+                    <h3>Ejercicios</h3>
+                    <p id="rutina" class="texto-entrenamiento">Cargando rutina...</p>
+
+                    <h3>¿Para qué te sirve?</h3>
+                    <p id="rutinaBeneficio">Cargando explicación...</p>
+                </div>
+            </div>
+
+            <div class="timer-section">
+                <div class="timer-title">Descanso recomendado</div>
+                <div id="timerDisplay" class="timer-display">00:00</div>
+                <div class="timer-buttons">
+                    <button id="btnTimer" class="btn btn-primary" type="button">INICIAR</button>
+                    <button id="btnResetTimer" class="btn btn-secondary" type="button">REINICIAR</button>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-principal" type="button" onclick="completarRutina()">
+                COMPLETAR ENTRENAMIENTO (+20 pts)
+            </button>
+        </section>
+
+        <section class="card mision-card">
+            <div class="card-title">
+                <h2>Misión del Día</h2>
+            </div>
+
+            <div class="mision-contenido">
+                <div class="mision-alerta">RETO COMPLEMENTARIO</div>
+                <p id="mision" class="texto-entrenamiento">Cargando misión...</p>
+            </div>
+
+            <div class="mision-extra">
+                <div class="objetivo-box">
+                    <span class="objetivo-label">Beneficio</span>
+                    <span class="objetivo-value" id="misionBeneficio">Cargando beneficio...</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-mision" type="button" onclick="completarMision()">
+                COMPLETAR MISIÓN (+30 pts)
+            </button>
+        </section>
+
+        <section class="card progreso-card">
+            <div class="card-title">
+                <h2>Progreso de Puntos</h2>
+            </div>
+            <div class="grafica-wrapper">
+                <canvas id="grafica"></canvas>
+            </div>
+        </section>
+
+        <section class="card disciplina-card">
+            <div class="card-title">
+                <h2>Sistema de Disciplina</h2>
+            </div>
+
+            <div class="disciplina-grid">
+                <div class="disciplina-box">
+                    <span class="disciplina-numero" id="diasActivos">0</span>
+                    <span class="disciplina-texto">Días activos</span>
+                </div>
+                <div class="disciplina-box">
+                    <span class="disciplina-numero" id="misionesCompletadas">0</span>
+                    <span class="disciplina-texto">Misiones</span>
+                </div>
+                <div class="disciplina-box">
+                    <span class="disciplina-numero" id="rutinasCompletadas">0</span>
+                    <span class="disciplina-texto">Rutinas</span>
+                </div>
+            </div>
+
+            <div class="disciplina-alerta">
+                <p>El sistema permite reclamar puntos una vez al día por entrenamiento y una vez al día por misión.</p>
+            </div>
+        </section>
+
+    </main>
+</body>
+
+</html>
