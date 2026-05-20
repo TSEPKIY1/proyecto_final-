@@ -18,8 +18,7 @@ app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SECURE"] = os.getenv("SESSION_COOKIE_SECURE", "false").lower() == "true"
 
-# En producción el frontend y el backend se sirven desde el mismo dominio.
-# CORS queda abierto solo para desarrollo local o pruebas controladas.
+
 CORS(app, supports_credentials=True)
 
 
@@ -27,9 +26,9 @@ from urllib.parse import urlparse, unquote
 
 
 def get_db_config():
-    """Config compatible con Railway MySQL y entorno local."""
+    
 
-    mysql_url = os.getenv("MYSQL_URL") or os.getenv("DATABASE_URL")
+   mysql_url = os.getenv("MYSQL_URL") or os.getenv("DATABASE_URL")
 
     if mysql_url:
         url = urlparse(mysql_url)
