@@ -26,9 +26,7 @@ from urllib.parse import urlparse, unquote
 
 
 def get_db_config():
-    
-
-   mysql_url = os.getenv("MYSQL_URL") or os.getenv("DATABASE_URL")
+    mysql_url = os.getenv("MYSQL_URL") or os.getenv("DATABASE_URL")
 
     if mysql_url:
         url = urlparse(mysql_url)
@@ -46,8 +44,8 @@ def get_db_config():
         "host": os.getenv("MYSQLHOST") or os.getenv("DB_HOST") or "localhost",
         "port": int(os.getenv("MYSQLPORT") or os.getenv("DB_PORT") or 3306),
         "user": os.getenv("MYSQLUSER") or os.getenv("DB_USER") or "root",
-        "password": os.getenv("MYSQLPASSWORD") or os.getenv("DB_PASSWORD") or "1234",
-        "database": os.getenv("MYSQLDATABASE") or os.getenv("DB_NAME") or "control_militar",
+        "password": os.getenv("MYSQLPASSWORD") or os.getenv("DB_PASSWORD") or "",
+        "database": os.getenv("MYSQLDATABASE") or os.getenv("DB_NAME") or "railway",
         "autocommit": False,
     }
 
